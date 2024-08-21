@@ -8,10 +8,16 @@ import org.elasticsearch.search.aggregations.AggregationBuilder;
 /**
  * @Author pw7563
  * @Date 2024/8/20 16:56
- * usage 定义好聚合参数的基类，桶聚合、指标聚合还是
+ * usage 聚合参数的抽象类，并实现好需要的聚合参数，如桶聚合、指标聚合
  */
 @Data
 public abstract class AggregationParam {
+
+
+    public static TermsAggregationParam termsAgg(String name, String field) {
+        return new TermsAggregationParam().setName(name).setField(field);
+    }
+
 
     /**
      * 指定聚合的名称

@@ -3,9 +3,14 @@ package com.example.esutil;
 import com.alibaba.fastjson2.JSONObject;
 import com.example.esutil.elastic.client.ElasticClient;
 import com.example.esutil.elastic.client.config.ESConstans;
+import com.example.esutil.elastic.client.model.param.agg.AggregationParam;
+import com.example.esutil.elastic.client.model.param.agg.TermsAggregationParam;
+import com.example.esutil.elastic.client.model.request.ElasticAggregationRequest;
 import com.example.esutil.elastic.client.model.request.ElasticCountRequest;
 import com.example.esutil.elastic.client.model.request.ElasticSearchRequest;
+import com.example.esutil.elastic.client.model.response.ElasticAggregationResult;
 import com.example.esutil.elastic.client.model.response.ElasticCountResult;
+import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.MatchAllQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.junit.jupiter.api.Test;
@@ -57,6 +62,19 @@ class EsUtilApplicationTests {
         elasticCountRequest.query(matchAllQueryBuilder);
         ElasticCountResult count = elasticClient.count(elasticCountRequest);
         System.out.println(count);
+    }
+
+    @Test
+    public void 聚合查询(){
+        ElasticAggregationRequest elasticAggregationRequest = new ElasticAggregationRequest();
+        elasticAggregationRequest.setQuery(new BoolQueryBuilder());
+        elasticAggregationRequest.setIndices(ESConstans.index);
+//        TermsAggregationParam termsAggregationParam = new TermsAggregationParam().setField("ruleName").setName("x");
+        TermsAggregationParam termsAggregationParam = AggregationParam.termsAgg("x", "ruleName");
+        elasticAggregationRequest.setAgg(termsAggregationParam);
+
+        ElasticAggregationResult aggs = elasticClient.aggs(elasticAggregationRequest);
+        System.out.println(aggs);
     }
 
 }

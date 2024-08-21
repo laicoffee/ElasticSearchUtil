@@ -1,9 +1,11 @@
 package com.example.esutil.elastic.client;
 
 import com.example.esutil.elastic.client.model.ElasticDoc;
+import com.example.esutil.elastic.client.model.request.ElasticAggregationRequest;
 import com.example.esutil.elastic.client.model.request.ElasticCountRequest;
 import com.example.esutil.elastic.client.model.request.ElasticDeleteByQueryRequest;
 import com.example.esutil.elastic.client.model.request.ElasticSearchRequest;
+import com.example.esutil.elastic.client.model.response.ElasticAggregationResult;
 import com.example.esutil.elastic.client.model.response.ElasticBulkResult;
 import com.example.esutil.elastic.client.model.response.ElasticCountResult;
 import com.example.esutil.elastic.client.model.response.ElasticSearchResponse;
@@ -13,6 +15,7 @@ import org.elasticsearch.action.get.GetRequest;
 import org.elasticsearch.action.get.GetResponse;
 import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.action.index.IndexResponse;
+import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.action.support.WriteRequest;
 import org.elasticsearch.action.update.UpdateRequest;
@@ -21,6 +24,7 @@ import org.elasticsearch.common.xcontent.XContentType;
 import org.elasticsearch.index.reindex.BulkByScrollResponse;
 import org.elasticsearch.index.reindex.DeleteByQueryRequest;
 import org.elasticsearch.search.SearchHits;
+import org.elasticsearch.search.aggregations.Aggregation;
 
 import java.util.Arrays;
 import java.util.List;
@@ -138,6 +142,19 @@ public class ElasticClient extends ElasticNativeClient {
         result.setCount(response.getCount());
         result.setTerminatedEarly(response.isTerminatedEarly() != null && response.isTerminatedEarly());
         return result;
+    }
+
+
+    /**
+     * 聚合查询
+     * @param request
+     * @return
+     */
+    public ElasticAggregationResult aggs(ElasticAggregationRequest request){
+        SearchRequest searchRequest = request.toSearchRequest();
+        SearchResponse response = searchNative(searchRequest);
+        Aggregation aggregation = response.getAggregations().get(request.getAgg().getName());
+        return request.getAgg().toElasticAggregationResult(aggregation);
     }
 
 

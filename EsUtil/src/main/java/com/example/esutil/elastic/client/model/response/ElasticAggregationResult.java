@@ -1,7 +1,10 @@
 package com.example.esutil.elastic.client.model.response;
 
+import com.example.esutil.elastic.client.model.bucket.TermBucket;
 import lombok.Data;
 import lombok.experimental.Accessors;
+
+import java.util.List;
 
 /**
  * @Author pw7563
@@ -12,6 +15,6 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class ElasticAggregationResult {
 
-
+    private List<TermBucket> termBuckets;
 
 }

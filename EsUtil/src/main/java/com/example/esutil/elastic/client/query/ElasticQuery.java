@@ -1,5 +1,6 @@
 package com.example.esutil.elastic.client.query;
 
+import com.example.esutil.elastic.client.model.param.agg.AggregationParam;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.search.sort.SortBuilder;
 
@@ -30,7 +31,10 @@ public interface ElasticQuery {
      */
     QueryBuilder toElasticQueryBuilder();
 
-
-
+    /**
+     * 创建聚合参数
+     * @return
+     */
+    AggregationParam toAggregationParam();
 
 }

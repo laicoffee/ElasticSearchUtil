@@ -1,5 +1,7 @@
 package com.example.esutil.elastic.client;
 
+import com.example.esutil.elastic.client.model.param.agg.AggregationParam;
+import com.example.esutil.elastic.client.model.request.ElasticAggregationRequest;
 import org.apache.http.HttpHost;
 import org.elasticsearch.action.bulk.BulkRequest;
 import org.elasticsearch.action.bulk.BulkResponse;
@@ -23,6 +25,8 @@ import org.elasticsearch.client.core.CountResponse;
 import org.elasticsearch.common.unit.TimeValue;
 import org.elasticsearch.index.reindex.BulkByScrollResponse;
 import org.elasticsearch.index.reindex.DeleteByQueryRequest;
+import org.elasticsearch.search.aggregations.Aggregation;
+import org.elasticsearch.search.aggregations.AggregationBuilder;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -174,6 +178,7 @@ public class ElasticNativeClient {
             throw new RuntimeException("es批量操作文档数据失败",e);
         }
     }
+
 
 
 
