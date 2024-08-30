@@ -26,6 +26,10 @@ public class TermsAggregationParam extends AggregationParam{
     private String field;
 
 
+    /**
+     * 返回的数量为默认数量
+     * @return
+     */
     @Override
     public AggregationBuilder toAggregationBuilder() {
         return AggregationBuilders.terms(name).field(field);
